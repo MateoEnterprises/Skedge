@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang='en' ng-app="devmtnApp">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Rock+Salt' type='text/css'>
+    <link rel="icon" href="images/icons/favicon.ico">
+    <link rel="stylesheet" href="styles/styles.css">
+    <title>
+      Skedge
+    </title>
+  </head>
+  <body ng-controller="devCont">
+<!--    *****Main Nav bar Section*****-->
+    <header>
+      <section>
+        <h1 class="titleName">Skedge</h1>
+        <p>The planner to plan your day when you don't know what to do, or just too lazy.</p>
+      </section>
+      <section>
+        <nav>
+        </nav>
+      </section>
+    </header>
+    
+<!--    *****Main Body with query and results section*****-->
+    <main>
+      {{test}}
+      <form ng-submit="queryFourSquare()">
+        <input type="number" placeholder="distance in miles" ng-model="distance" required autofocus>
+        <input type="text" placeholder="location" ng-model="location" required>
+        <button>Skedge</button>
+      </form>
+      <section ng-repeat="establishment in parsedData">
+        <p>{{ establishment.venue.name }}</p>
+        <p>{{ establishment.venue.rating }}</p>
+      </section>
+      <h3>{{parsedData[2].venue.name}}</h3>
+    </main>
+    
+    
+<!--    *****Awesome footer /w contact*****-->
+    <footer></footer>
+    
+    
+    
+    
+<!--    *****Script Links*****-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="ecma/app.js"></script>
+    <script src="ecma/factory.js"></script>
+  </body>
+</html>
