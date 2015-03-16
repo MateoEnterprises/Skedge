@@ -15,27 +15,87 @@
     <header>
       <section>
         <h1 class="titleName">Skedge</h1>
-        <p>The planner to plan your day when you don't know what to do, or just too lazy.</p>
+        <p>The planner to plan your day when you don't know what to do, or are just too lazy, tired, overwhelmed...</p>
       </section>
       <section>
-        <nav>
-        </nav>
+        {{test}}
       </section>
     </header>
     
 <!--    *****Main Body with query and results section*****-->
     <main>
-      {{test}}
-      <form ng-submit="queryFourSquare()">
-        <input type="number" placeholder="distance in miles" ng-model="distance" required autofocus>
-        <input type="text" placeholder="location" ng-model="location" required>
-        <button>Skedge</button>
-      </form>
-      <section ng-repeat="establishment in parsedData">
-        <p>{{ establishment.venue.name }}</p>
-        <p>{{ establishment.venue.rating }}</p>
+      <button class="btn btn-primary" href="#" ng-click="locations = !locations; ready = !ready" ng-show="!ready" ng-class="{ active: locations }">Ready?</button>
+        <form ng-show="locations">
+          <section>
+            <h4 class="titleName">Locale</h4>
+            <input type="text" placeholder="City, State or Zip" ng-model="location" required autofocus>
+          </section>
+          <section>
+            <h4 class="titleName">Just how lazy are you?</h4>
+            <input type="number" placeholder="Distance of travel" ng-model="distance" required>
+          </section>
+          <section ng-show="!activity">
+            <h4 class="titleName">Need something to do after?</h4>
+            <ul>
+              <li>
+                <input type="radio" ng-click="activity = !activity" ng-model="getActivity" value=true> Yep.
+              </li>
+              <li>
+                <input type="radio" ng-click="activity = activity" ngmodel="getActivity" value=false> Nope.
+              </li>
+            </ul>
+          </section>
+          <section ng-show="activity">
+            <h4>Activties!</h4>
+            <p><input type="radio" value="4d4b7105d754a06377d81259" ng-model="activity"> Outdoors and Rec</p>
+            <p><input type="radio" value="4d4b7104d754a06370d81259" ng-model="activity"> Arts and Entertainment</p>
+          </section>
+          <button class="btn btn-primary" href="#" ng-click="costs = !costs; locations = !locations; skedge = !skedge" ng-class="{ active: locations }">Next</button>
+        </form>
+        <form ng-show="costs">
+          <section>
+            <h4 class="titleName">What's your budget:</h4>
+            <ul>
+              <li>
+                <input type="radio" ng-model="price" value="1"> I'm pretty cheap, lets keep it less than $10
+              </li>
+              <li>
+                <input type="radio" ng-model="price" value="2"> Meh, lets go up to $20
+              </li>
+              <li>
+                <input type="radio" ng-model="price" value="3"> Just got a check from Grandma.
+              </li>
+              <li>
+                <input type="radio" ng-model="price" value="4"> Mr./M(r)s. Money Bags Riches
+              </li>
+            </ul>
+          </section>        
+          <section>
+            <h4 class="titleName">Rating Limits:</h4>
+            <h6 class="titleName">On a scale of 1 to 10, how good do you want it?</h6>
+            <input type="number" placeholder="lowest standard" ng-model="rating" required>
+            <br>*****This section will require some JS manipulations since ratings are not an optional search topic from the API. Feature currently disabed.*****
+          </section>
+          <button class="btn btn-success" ng-show="skedge" ng-click="queryFourSquare(); costs = !costs; results = !results">Skedge it!</button>
+        </form>
+<!--      *****results from search*****-->
+      <section ng-show="results">
+        <h3 class="titleName">Skedge'D:</h3>
+        <section>
+          <h4>{{ randomEstablishment.venue.name }}</h4>
+          <p><a href="{{randomEstablishment.venue.url}}" target="_blank">visit their website</a></p>
+          <p>Rating: {{ randomEstablishment.venue.rating }} <br>Cost: {{ randomEstablishment.venue.price.message }}</p>
+          <p><a href="https://foursquare.com/venue/{{randomEstablishment.venue.id}}" target="_blank">check 'em out on FourSquare</a></p>
+        </section>
+        <section>
+          <h4>{{ randomActivity.name }}</h4>
+          <p><a href="{{randomActivity.url}}" target="_blank">visit their website</a></p>
+        </section>
+        <p><a href="#" ng-click="queryFourSquare()">Roll the dice again.</a></p>
+        <hr>
       </section>
-      <h3>{{parsedData[2].venue.name}}</h3>
+
+      
     </main>
     
     
